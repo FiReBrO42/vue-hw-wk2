@@ -65,22 +65,29 @@ Vue.createApp( {
   },
   methods:{
     checkLogin(){
-
-  
+      //this.apiUrl 才找的到data 資料
       axios.post(`${this.apiUrl}api/user/check`)
       .then((res) =>{
         console.log(res);
+        alert('通過')
         this.getProducts();
       })
-      
     },
     getProducts(){
-      const url =`${apiUrl}/v2/api/${api_path}/admin/products/all`;
-      axios.get(url =>{
+      const url =`${this.apiUrl}api/${this.api_path}/admin/products`;
+      //此處以下axios 你寫錯了
+      axios.get(`${url}`)
+      .then((res) =>{
         console.log(res);
+        alert('取得通過')
         this.products = res.data.products;
       })
-      
+
+      //建議有catch跳錯提示
+      .catch((err)=>{
+        alert('失敗')
+        console.log(err);
+      })
     }
   },
   mounted(){
